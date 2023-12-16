@@ -71,12 +71,15 @@ def do_tilt_cycle(lines):
 
 
 def search_sequence(tuples: list[tuple[int]]):
-    if (len(tuples) < 2):
+    data_length = len(tuples)
+    if (data_length < 2):
         return 0, 0
-    for ii in range(len(tuples) - 1):   # Offset.
-        for jj in range(1, int((len(tuples) - ii)/2) + 1):  # Length
-            if (compare_tuple_lists(tuples[ii:ii+jj], tuples[ii+jj:ii+jj+jj])):
-                return ii, jj
+
+    for offset in range(data_length % 2, len(tuples) - 1, 2):
+        length = int((data_length - offset) / 2)
+        if (compare_tuple_lists(tuples[offset:offset + length],
+                                tuples[offset + length::])):
+            return offset, length
 
     return 0, 0
 
